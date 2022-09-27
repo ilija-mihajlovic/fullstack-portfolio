@@ -1,5 +1,7 @@
 import React from 'react'
 import './Skills.scss'
+import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
@@ -9,7 +11,7 @@ import { AppWrap, MotionWrap } from '../../wrapper'
 import { urlFor, client } from '../../client'
 
 
-const Skills = () => {
+const Skills = ({ scrollPosition }) => {
 
   const [skills, setSkills] = useState([])
   const [experience, setExperience] = useState([])
@@ -43,7 +45,12 @@ const Skills = () => {
               key={skill.name}
             >
               <div className="app__flex" style={{backgroundColor: skill.bgColor}}>
-                <img src={urlFor(skill.icon)} alt={skill.name} />
+                <LazyLoadImage 
+                  src={urlFor(skill.icon)} 
+                  alt={skill.name} 
+                  scrollPosition={scrollPosition}
+                  effect='blur'
+                />
               </div>
               <p className='p-text'>{skill.name}</p>
 
@@ -96,7 +103,7 @@ const Skills = () => {
 }
 
 export default AppWrap(
-  MotionWrap(Skills, 'app__skills'), 
-  'skills',
-  'app__whitebg'
+    MotionWrap(trackWindowScroll(Skills), 'app__skills'), 
+    'skills',
+    'app__whitebg'
 ) 

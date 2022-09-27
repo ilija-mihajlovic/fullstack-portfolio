@@ -35,7 +35,13 @@ import nb from '../assets/nb.png';
 import skype from '../assets/skype.png';
 import spotify from '../assets/spotify.png';
 
+import wordpress from '../assets/wordpress.png';
+import coding from '../assets/coding.png';
+
+
 export default {
+  coding,
+  wordpress,
   email,
   mobile,
   api,

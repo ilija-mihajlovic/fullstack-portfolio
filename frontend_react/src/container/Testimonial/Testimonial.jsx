@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 import { motion } from 'framer-motion';
+import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import './Testimonial.scss';
 
-const Testimonial = () => {
+const Testimonial = ({ scrollPosition }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [testimonials, setTestimonials] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -33,7 +35,12 @@ const Testimonial = () => {
       {testimonials.length && (
         <>
           <div className="app__testimonial-item app__flex">
-            <img src={urlFor(testimonials[currentIndex].imageurl)} alt={testimonials[currentIndex].name} />
+            <LazyLoadImage 
+              effect='blur' 
+              src={urlFor(testimonials[currentIndex].imageurl)} 
+              alt={testimonials[currentIndex].name}
+              scrollPosition={scrollPosition} 
+            />
             <div className="app__testimonial-content">
               <p className="p-text">{testimonials[currentIndex].feedback}</p>
               <div>
@@ -62,7 +69,12 @@ const Testimonial = () => {
             transition={{ duration: 0.5, type: 'tween' }}
             key={brand._id}
           >
-            <img src={urlFor(brand.imgUrl)} alt={brand.name} />
+            <LazyLoadImage 
+              src={urlFor(brand.imgUrl)} 
+              alt={brand.name} 
+              effect='blur'
+              scrollPosition={scrollPosition} 
+            />
           </motion.div>
         ))}
       </div>
@@ -71,7 +83,7 @@ const Testimonial = () => {
 };
 
 export default AppWrap(
-  MotionWrap(Testimonial, 'app__testimonial'),
+  MotionWrap(trackWindowScroll(Testimonial), 'app__testimonial'),
   'testimonials',
   'app__primarybg',
 );

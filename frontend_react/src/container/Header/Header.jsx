@@ -4,8 +4,9 @@ import {motion} from 'framer-motion'
 import {images} from '../../constants'
 
 import {AppWrap} from '../../wrapper'
+import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 
-const Header = () => {
+const Header = ({ scrollPosition }) => {
   const scaleVariants = {
     whileInView: {
       scale: [0,1],
@@ -35,7 +36,7 @@ const Header = () => {
 
           <div className="tag-cmp app__flex">
             <p className='p-text'>Wordpress Developer</p>
-            <p className='p-text'>Fullstack Developer</p>
+            <p className='p-text'>Full Stack Developer</p>
             <p className='p-text'>UI/UX Designer</p>
           </div>
         </div>
@@ -61,9 +62,9 @@ const Header = () => {
         whileInView={scaleVariants.whileInView}
         className='app__header-circles'
       >
-        {[images.flutter, images.redux, images.sass].map((circle, index) => (
+        {[images.wordpress, images.figma, images.coding].map((circle, index) => (
           <div className='circle-cmp app__flex' key={`circle-${index}`}>
-            <img src={circle} alt='circle' />
+            <LazyLoadImage src={circle} alt='circle' scrollPosition={scrollPosition}/>
           </div>
         ))}
       </motion.div>
@@ -71,4 +72,4 @@ const Header = () => {
   )
 }
 
-export default AppWrap(Header, 'home')
+export default AppWrap(trackWindowScroll(Header), 'home')

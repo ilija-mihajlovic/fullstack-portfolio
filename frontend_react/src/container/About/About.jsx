@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react'
 import './About.scss'
+import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import { motion } from 'framer-motion'
 import { images } from '../../constants'
@@ -7,6 +9,7 @@ import { images } from '../../constants'
 import { urlFor, client } from '../../client'
 
 import { AppWrap, MotionWrap } from '../../wrapper'
+
 
 
 const About = () => {
@@ -33,7 +36,7 @@ const About = () => {
             className='app__profile-item'
             key={about.title + index}
           >
-            <img src={urlFor(about.imgUrl)} alt={about.title} />
+            <LazyLoadImage src={urlFor(about.imgUrl)} alt={about.title} effect='blur' />
             <h2 className='bold-text' style={{marginTop: 20}}>{about.title}</h2>
             <p className='p-text' style={{marginTop: 10}}>{about.description}</p>
           </motion.div>
@@ -44,7 +47,7 @@ const About = () => {
 }
 
 export default AppWrap(
-  MotionWrap(About, 'app__about'), 
+  MotionWrap(trackWindowScroll(About), 'app__about'), 
   'about',
   'app__whitebg'
 ) 
